@@ -1,28 +1,61 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<conio.h>
+int main()
+{
+	int i,j,k,Vert,randcheck,MaxEdges,edges,adj[10][10];
+	int count=0,print_count=0;
+	int Emergency = 0;
+	float density;
+	clrscr();
+	printf("Enter the number of vertices\n");
+	scanf("%d",&Vert);
+	printf("%d\n",Vert);
+	printf("Enter the number of density\n");
+	scanf("%f",&density);
+	MaxEdges=Vert*(Vert-1)/2;
+	edges = density*MaxEdges;
+	printf("Max Edges = %d\n",edges);
+	/*Creating the upper triangular matrix*/
+	for(i = 0; i < Vert; i++)
+	{
+		for(j = i+1; j < Vert; j ++)
+			adj[i][j]=0;
+	}
+	while(count<edges || Emergency<1000)
+	{
+		for(i=0;i<Vert;i++)
+		{
+			if(count>=edges)
+			{ break;}
+			for(j=i+1;j<Vert;j++)
+			{
+				if(adj[i][j]!=1)
+				{
+					if(count>=edges)
+					{ break;}
+					srand (time(NULL));
+					randcheck=rand()%2;
+					if(randcheck==0)
+					{
+						adj[i][j]=1;
+						printf("%d\n",count);
+						count++;
+					}
+				}
+			}
+		}
+		Emergency++;
+	}
+	for(i = 0; i < Vert; i++)
+	{
+		for(j = i+1; j < Vert; j ++)
+			printf("%d\t",adj[i][j]);
+		printf("\n");
+		print_count++;
+		for(k=0;k<print_count;k++)
+		printf("\t");
+	}
+	return(0);
+}
